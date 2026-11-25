@@ -15,17 +15,16 @@ h2{font-size:1.6rem;line-height:1.25}
 h3{font-size:1.3rem}
 p{margin:10px 0}
 
-/* ===== Decor fix: ghirlandă, raft cu cărți, zăpadă ===== */
-.ghirlanda{position:fixed;left:0;right:0;top:0;height:22px;z-index:2;pointer-events:none;
-background-image:radial-gradient(circle 4px at 10px 12px,#e6b94a 90%,rgba(0,0,0,0)),radial-gradient(circle 4px at 30px 12px,#eba0aa 90%,rgba(0,0,0,0)),radial-gradient(circle 4px at 50px 12px,#9dbba0 90%,rgba(0,0,0,0)),radial-gradient(circle 4px at 70px 12px,#fff1b0 90%,rgba(0,0,0,0)),linear-gradient(#c9a85c,#c9a85c);
-background-size:80px 22px,80px 22px,80px 22px,80px 22px,100% 2px;
-background-position:0 0,0 0,0 0,0 0,0 5px;background-repeat:repeat-x;animation:puls 2.6s ease-in-out infinite alternate}
+/* ===== Decor discret: luminițe calde, raft cu cărți, câțiva fulgi fini ===== */
+.luminite{position:fixed;left:0;right:0;top:0;height:14px;z-index:2;pointer-events:none;opacity:.55;
+background-image:radial-gradient(circle 2.5px at 8px 7px,#e6b94a 90%,rgba(0,0,0,0)),radial-gradient(circle 2.5px at 28px 5px,#fff1b0 90%,rgba(0,0,0,0)),radial-gradient(circle 2.5px at 48px 7px,#f4b6bd 90%,rgba(0,0,0,0));
+background-size:66px 14px;background-repeat:repeat-x;animation:puls 3s ease-in-out infinite alternate}
 .raft{position:fixed;left:0;right:0;bottom:0;height:46px;z-index:0;pointer-events:none;border-top:7px solid #b98a5a;opacity:.92;
 background-image:repeating-linear-gradient(90deg,#d99aa0 0,#d99aa0 12px,#fbf4e6 12px,#fbf4e6 13px,#8fae96 13px,#8fae96 29px,#fbf4e6 29px,#fbf4e6 30px,#e6c27a 30px,#e6c27a 41px,#fbf4e6 41px,#fbf4e6 42px,#b9a5cc 42px,#b9a5cc 58px,#fbf4e6 58px,#fbf4e6 59px,#7e9f8a 59px,#7e9f8a 70px,#fbf4e6 70px,#fbf4e6 71px,#e9b9a6 71px,#e9b9a6 87px,#fbf4e6 87px,#fbf4e6 88px)}
 .zapada{position:fixed;left:0;right:0;top:0;bottom:0;z-index:3;pointer-events:none;overflow:hidden}
-.zapada span{position:absolute;top:-12px;background:#fff;border-radius:50%;box-shadow:0 0 0 1px #d6e2d8;opacity:.9;animation:cade linear infinite}
-.in-joc .zapada{display:none}
-.in-joc .ghirlanda{animation:none}
+.zapada span{position:absolute;top:-8px;background:#fff;border-radius:50%;box-shadow:0 0 0 1px #dfe8e0;opacity:.6;animation:cade linear infinite}
+.in-joc .zapada,.in-buchet .zapada{display:none}
+.in-joc .luminite{animation:none}
 
 /* ===== Ecrane și carduri ===== */
 main{position:relative;z-index:1}
@@ -33,16 +32,26 @@ main{position:relative;z-index:1}
 .ecran.activ{display:flex}
 .card{position:relative;width:100%;max-width:640px;margin:0 auto;padding:22px 18px;text-align:center;background:#fffaf0;border:3px solid #d4a84b;border-radius:22px;box-shadow:0 6px 0 #c9d6c3,0 10px 18px rgba(80,70,40,.18)}
 .card:after{content:"";position:absolute;left:7px;top:7px;right:7px;bottom:7px;border:2px dashed #e3cf95;border-radius:16px;pointer-events:none}
+.crenga{position:absolute;width:56px;height:auto;pointer-events:none;z-index:1}
+.c1{left:-8px;top:14px;transform:rotate(-38deg)}
+.c2{right:-8px;bottom:16px;transform:rotate(142deg)}
 .subtitlu{font-size:1.2rem;color:#6a5a45;font-style:italic}
 .scena{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin-bottom:6px}
-.copac{width:22vw;max-width:105px;height:auto}
 .robot{width:34vw;max-width:150px;height:auto;animation:plutire 3s ease-in-out infinite alternate}
 .robot.mic{width:22vw;max-width:90px;animation-duration:3.6s}
-.copac-mare{width:34vw;max-width:150px;height:auto}
+.baloane{width:22vw;max-width:100px;height:auto;animation:plutire 3.4s ease-in-out infinite alternate}
 .mesaj p{text-align:left;font-size:1.1rem;line-height:1.65}
 .mesaj h2{text-align:center}
 .final-text{font-size:1.25rem;color:#4f6b55;line-height:1.55}
-.mesaj-final{margin-top:16px;padding:14px;text-align:left;font-size:1.12rem;line-height:1.6;background:#fdecee;border:2px solid #f0c9c9;border-radius:16px;animation:aparitie .9s both}
+
+/* ===== Ecranul de întâmpinare: titlu mare + tort ===== */
+.titlu-mare{font-size:2.3rem;line-height:1.15;color:#a8455a;margin:4px 0 8px;text-shadow:0 2px 0 #f6dfe3}
+.scena-tort{display:flex;align-items:flex-end;justify-content:center;max-width:440px;margin:4px auto 8px}
+.scena-tort svg{flex:0 0 auto;height:auto;margin:0 1%}
+.scena-tort .baloane{width:20%;max-width:none}
+.scena-tort .t-tort{width:52%}
+.scena-tort .robot{width:24%;max-width:none}
+.flacara{animation:licar 1s ease-in-out infinite alternate}
 
 /* ===== Butoane ===== */
 .btn{display:inline-block;min-height:52px;min-width:210px;max-width:100%;margin:12px 4px 0;padding:12px 24px;font:bold 1.1rem Georgia,"Times New Roman",serif;color:#3b3020;background:#e6c26a;border:2px solid #b8923a;border-radius:30px;box-shadow:0 4px 0 #b8923a;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -67,34 +76,95 @@ main{position:relative;z-index:1}
 .bravo{font-size:1.2rem;color:#476650;font-weight:bold}
 .overlay .btn{margin-top:8px;min-height:48px}
 
+/* ===== Ecranul cu buchetul ===== */
+.card-buchet{max-width:780px;overflow:hidden}
+.buchet-layout{display:flex;flex-wrap:wrap;align-items:center;justify-content:center}
+.buchet-scena{position:relative;flex:0 0 auto;width:320px;max-width:100%;margin:6px auto 10px}
+.buchet{position:relative;width:100%;height:0;padding-bottom:115%}
+.buchet-baza{position:absolute;left:0;top:0;width:100%;height:100%;animation:aparitie 1.2s ease-out both}
+.floare{position:absolute;transform-origin:50% 75%;animation:inflorire 3s ease-out both}
+.floare svg{position:absolute;left:0;top:0;width:100%;height:100%}
+.floare .mugur{opacity:0;animation:mugurIese 3s ease-in-out both}
+.floare .desch{animation:deschIese 3s ease-out both}
+.d1,.d1 svg{animation-delay:.5s}.d2,.d2 svg{animation-delay:.9s}.d3,.d3 svg{animation-delay:1.3s}
+.d4,.d4 svg{animation-delay:1.7s}.d5,.d5 svg{animation-delay:2s}.d6,.d6 svg{animation-delay:2.4s}
+.d7,.d7 svg{animation-delay:2.7s}.d8,.d8 svg{animation-delay:3s}.d9,.d9 svg{animation-delay:3.3s}
+.d10,.d10 svg{animation-delay:3.6s}.d11,.d11 svg{animation-delay:3.9s}.d12,.d12 svg{animation-delay:4.2s}
+.mesaj-buchet{flex:1 1 280px;min-width:0;padding:0 6px;text-align:left;animation:aparitie 1.2s .8s ease-out both}
+.mesaj-buchet h2{color:#a8455a;font-size:1.45rem}
+.mesaj-buchet p{font-size:1.1rem;line-height:1.65}
+.petale{position:absolute;left:0;right:0;top:0;height:100%;pointer-events:none}
+.petala{position:absolute;top:0;width:12px;height:9px;border-radius:0 100% 0 100%;opacity:0}
+.p1{animation:petala1 9s linear infinite}
+.p2{animation:petala2 10s linear infinite}
+.sclip{position:absolute;width:16px;height:16px;opacity:.8;animation:scintei 2.4s ease-in-out infinite alternate backwards}
+
 /* ===== Animații (simple, doar transform / opacity) ===== */
 @keyframes plutire{from{transform:translateY(0)}to{transform:translateY(-7px)}}
 @keyframes cade{to{transform:translateY(108vh)}}
 @keyframes sclipire{from{opacity:.2}to{opacity:1}}
-@keyframes puls{from{opacity:.65}to{opacity:1}}
+@keyframes puls{from{opacity:.35}to{opacity:.7}}
+@keyframes licar{from{opacity:.65}to{opacity:1}}
 @keyframes aparitie{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes inflorire{0%{opacity:0;transform:scale(.2)}25%{opacity:1}100%{opacity:1;transform:scale(1)}}
+@keyframes mugurIese{0%,35%{opacity:1}75%,100%{opacity:0}}
+@keyframes deschIese{0%,30%{opacity:0;transform:scale(.55)}100%{opacity:1;transform:scale(1)}}
+@keyframes petala1{0%{opacity:0;transform:translate(0,0) rotate(0deg)}12%{opacity:.9}88%{opacity:.8}100%{opacity:0;transform:translate(46px,330px) rotate(320deg)}}
+@keyframes petala2{0%{opacity:0;transform:translate(0,0) rotate(0deg)}12%{opacity:.9}88%{opacity:.8}100%{opacity:0;transform:translate(-46px,330px) rotate(-300deg)}}
+@keyframes scintei{from{opacity:.1;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
 .bec{animation:sclipire 1.2s ease-in-out infinite alternate}
 
-@media (min-width:600px){h1{font-size:2.5rem}h2{font-size:2rem}.card{padding:30px 34px}}
+@media (min-width:600px){h1{font-size:2.5rem}h2{font-size:2rem}.card{padding:30px 34px}.titlu-mare{font-size:3.2rem}.mesaj-buchet h2{font-size:1.7rem}.crenga{width:70px}}
 @media (max-height:480px){
  .ecran{padding:30px 10px 54px}
  h1{font-size:1.5rem}.subtitlu{font-size:1rem}
- .copac{width:60px}.robot{width:84px}.robot.mic{width:60px}.copac-mare{width:84px}
+ .titlu-mare{font-size:1.6rem;margin:0 0 4px}
+ .scena-tort{max-width:250px}
+ .robot{width:84px}.robot.mic{width:60px}.baloane{width:56px}
+ .scena-tort .robot{width:24%}.scena-tort .baloane{width:20%}
+ .crenga{display:none}
  .titlu-joc{display:none}
  .overlay{padding:4px 10px}.instr{font-size:.85rem}.instr li{margin:2px 0}
  .overlay h3{font-size:1.05rem;margin:2px 0}.overlay p{margin:3px 0;font-size:.9rem}
  .scor-mare{font-size:1.1rem}.bravo{font-size:.95rem}
  .overlay .btn{min-height:42px;margin-top:4px;padding:6px 16px;font-size:.95rem}
  .raft{height:30px}
+ .buchet-scena{width:210px}
+ .petala{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 </head>
 <body>
 
-<!-- Simboluri SVG reutilizabile: robotel și brad -->
+<!-- Simboluri SVG reutilizabile: roboței, baloane, crenguță de brad, flori, stea -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+ <!-- Roboțel cu antenă (detaliu neutru, de robotică) -->
  <symbol id="robot" viewBox="0 0 100 110">
+  <g stroke="#4a5d4f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+   <rect x="36" y="100" width="10" height="7" rx="3" fill="#4a5d4f"/>
+   <rect x="54" y="100" width="10" height="7" rx="3" fill="#4a5d4f"/>
+   <rect x="14" y="82" width="14" height="9" rx="4" fill="currentColor"/>
+   <rect x="72" y="82" width="14" height="9" rx="4" fill="currentColor"/>
+   <rect x="30" y="76" width="40" height="26" rx="9" fill="currentColor"/>
+   <circle cx="50" cy="89" r="5" fill="#f4b6bd" stroke="none"/>
+   <rect x="15" y="51" width="7" height="14" rx="3.5" fill="#e8b840"/>
+   <rect x="78" y="51" width="7" height="14" rx="3.5" fill="#e8b840"/>
+   <path d="M50 38L50 17" fill="none"/>
+   <circle cx="50" cy="13" r="6" fill="#e8b840"/>
+   <rect x="22" y="38" width="56" height="40" rx="12" fill="currentColor"/>
+   <rect x="29" y="46" width="42" height="26" rx="8" fill="#fffaf0" stroke="none"/>
+   <circle cx="41" cy="57" r="4.5" fill="#4a5d4f" stroke="none"/>
+   <circle cx="59" cy="57" r="4.5" fill="#4a5d4f" stroke="none"/>
+   <circle cx="42.6" cy="55.4" r="1.6" fill="#fff" stroke="none"/>
+   <circle cx="60.6" cy="55.4" r="1.6" fill="#fff" stroke="none"/>
+   <path d="M43 63Q50 69 57 63" fill="none" stroke-width="2"/>
+   <circle cx="35" cy="65" r="3" fill="#f0a0ac" stroke="none" opacity=".8"/>
+   <circle cx="65" cy="65" r="3" fill="#f0a0ac" stroke="none" opacity=".8"/>
+  </g>
+ </symbol>
+ <!-- Roboțel care aduce un cadou pe cap -->
+ <symbol id="robot-cadou" viewBox="0 0 100 110">
   <g stroke="#4a5d4f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
    <rect x="36" y="100" width="10" height="7" rx="3" fill="#4a5d4f"/>
    <rect x="54" y="100" width="10" height="7" rx="3" fill="#4a5d4f"/>
@@ -111,26 +181,88 @@ main{position:relative;z-index:1}
    <path d="M43 63Q50 69 57 63" fill="none" stroke-width="2"/>
    <circle cx="35" cy="65" r="3" fill="#f0a0ac" stroke="none" opacity=".8"/>
    <circle cx="65" cy="65" r="3" fill="#f0a0ac" stroke="none" opacity=".8"/>
-   <path d="M27 36Q40 6 66 12Q62 24 73 36Z" fill="#d9534f"/>
-   <rect x="24" y="32" width="52" height="9" rx="4.5" fill="#fff"/>
-   <circle cx="66" cy="12" r="6" fill="#fff"/>
+   <rect x="38" y="22" width="24" height="16" rx="2" fill="#f4b6bd" stroke-width="2"/>
+   <rect x="36" y="17" width="28" height="7" rx="2" fill="#fffaf0" stroke-width="2"/>
+   <rect x="48" y="17" width="4" height="21" fill="#e8b840" stroke="none"/>
+   <circle cx="45" cy="13" r="4" fill="#e8b840" stroke-width="2"/>
+   <circle cx="55" cy="13" r="4" fill="#e8b840" stroke-width="2"/>
   </g>
  </symbol>
- <symbol id="brad" viewBox="0 0 100 140">
-  <g stroke="#4a5d4f" stroke-width="2" stroke-linejoin="round">
-   <rect x="44" y="118" width="12" height="16" fill="#a9784a"/>
-   <polygon points="50,58 94,120 6,120" fill="#6f9a78"/>
-   <polygon points="50,34 88,86 12,86" fill="#7aa883"/>
-   <polygon points="50,14 82,56 18,56" fill="#88b690"/>
-   <polygon points="50,2 53,9 60,9 54,14 56,21 50,17 44,21 46,14 40,9 47,9" fill="#e6b94a" stroke="#b8923a" stroke-width="1.5"/>
+ <!-- Baloane de aniversare -->
+ <symbol id="baloane" viewBox="0 0 100 150">
+  <g stroke="#8a6a5a" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+   <path d="M32 59Q26 90 40 128" fill="none"/>
+   <path d="M66 51Q74 86 46 128" fill="none"/>
+   <path d="M50 82Q46 104 44 128" fill="none"/>
+   <ellipse cx="32" cy="38" rx="17" ry="21" fill="#f4b6bd"/>
+   <path d="M32 59L28 65L36 65Z" fill="#f4b6bd"/>
+   <ellipse cx="66" cy="30" rx="17" ry="21" fill="#e8b840"/>
+   <path d="M66 51L62 57L70 57Z" fill="#e8b840"/>
+   <ellipse cx="50" cy="62" rx="16" ry="20" fill="#9dbba0"/>
+   <path d="M50 82L46 88L54 88Z" fill="#9dbba0"/>
   </g>
-  <circle cx="50" cy="44" r="3.5" fill="#e6b94a"/><circle cx="40" cy="78" r="3.5" fill="#f0c9c9"/>
-  <circle cx="62" cy="72" r="3.5" fill="#e6b94a"/><circle cx="30" cy="108" r="4" fill="#e6b94a"/>
-  <circle cx="50" cy="98" r="4" fill="#f0c9c9"/><circle cx="70" cy="108" r="4" fill="#f0c9c9"/>
+  <ellipse cx="25" cy="30" rx="4" ry="7" fill="#fff" opacity=".45" transform="rotate(20 25 30)"/>
+  <ellipse cx="59" cy="22" rx="4" ry="7" fill="#fff" opacity=".45" transform="rotate(20 59 22)"/>
+  <ellipse cx="44" cy="54" rx="3.5" ry="6" fill="#fff" opacity=".45" transform="rotate(20 44 54)"/>
+ </symbol>
+ <!-- Crenguță de brad cu luminițe (accent discret de iarnă) -->
+ <symbol id="crenguta" viewBox="0 0 60 40">
+  <g fill="none" stroke="#5f8a69" stroke-width="2.2" stroke-linecap="round">
+   <path d="M4 20Q30 17 56 20"/>
+   <path d="M10 19L17 8M10 21L17 32M20 18.8L27 6M20 21.2L27 34M30 18.6L36 6M30 21.4L36 34M40 18.8L45 8M40 21.2L45 32"/>
+  </g>
+  <circle cx="22" cy="20" r="2.6" fill="#e6b94a"/>
+  <circle cx="38" cy="19" r="2.6" fill="#f4b6bd"/>
+  <circle cx="50" cy="20" r="2.4" fill="#e6b94a"/>
+ </symbol>
+
+ <!-- Mugur (floare închisă), culoarea vine din "color" -->
+ <symbol id="f-mugur" viewBox="0 0 100 100">
+  <path d="M50 94Q18 70 30 34Q40 10 50 6Q60 10 70 34Q82 70 50 94Z" fill="currentColor" stroke="#7d4a56" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M50 12Q40 46 50 90Q60 46 50 12Z" fill="rgba(255,255,255,.28)"/>
+  <path d="M50 94Q34 86 28 70Q42 78 50 94ZM50 94Q66 86 72 70Q58 78 50 94Z" fill="#7aa883" stroke="#4a5d4f" stroke-width="1.5" stroke-linejoin="round"/>
+ </symbol>
+ <!-- Trandafir deschis -->
+ <symbol id="f-trandafir" viewBox="0 0 100 100">
+  <g stroke="#7d4a56" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+   <circle cx="80" cy="50" r="19" fill="currentColor"/>
+   <circle cx="65" cy="76" r="19" fill="currentColor"/>
+   <circle cx="35" cy="76" r="19" fill="currentColor"/>
+   <circle cx="20" cy="50" r="19" fill="currentColor"/>
+   <circle cx="35" cy="24" r="19" fill="currentColor"/>
+   <circle cx="65" cy="24" r="19" fill="currentColor"/>
+   <circle cx="50" cy="50" r="33" fill="currentColor" stroke="none"/>
+   <circle cx="50" cy="50" r="24" fill="rgba(255,255,255,.16)"/>
+   <circle cx="50" cy="50" r="14" fill="rgba(255,255,255,.14)"/>
+   <path d="M50 50Q57 49 57 43Q56 35 47 36Q38 38 39 48Q41 60 52 60Q66 59 65 45" fill="none"/>
+  </g>
+ </symbol>
+ <!-- Lalea deschisă -->
+ <symbol id="f-lalea" viewBox="0 0 100 120">
+  <g stroke="#7d4a56" stroke-width="2.4" stroke-linejoin="round">
+   <path d="M18 52Q14 22 26 6Q40 22 50 40Q60 22 74 6Q86 22 82 52Q82 94 50 110Q18 94 18 52Z" fill="currentColor"/>
+   <path d="M50 4Q74 28 70 66Q66 100 50 110Q34 100 30 66Q26 28 50 4Z" fill="currentColor"/>
+   <path d="M50 4Q74 28 70 66Q66 100 50 110Q34 100 30 66Q26 28 50 4Z" fill="rgba(255,255,255,.22)" stroke="none"/>
+  </g>
+ </symbol>
+ <!-- Floare mică -->
+ <symbol id="f-floare" viewBox="0 0 60 60">
+  <g stroke="#7d4a56" stroke-width="1.8" stroke-linejoin="round">
+   <circle cx="46" cy="30" r="11" fill="currentColor"/>
+   <circle cx="34.9" cy="45.2" r="11" fill="currentColor"/>
+   <circle cx="17.1" cy="39.4" r="11" fill="currentColor"/>
+   <circle cx="17.1" cy="20.6" r="11" fill="currentColor"/>
+   <circle cx="34.9" cy="14.8" r="11" fill="currentColor"/>
+   <circle cx="30" cy="30" r="7" fill="#f0c24a" stroke="#b8923a"/>
+  </g>
+ </symbol>
+ <!-- Sclipire -->
+ <symbol id="stea" viewBox="0 0 20 20">
+  <path d="M10 0L12 8L20 10L12 12L10 20L8 12L0 10L8 8Z" fill="#e6b94a"/>
  </symbol>
 </svg>
 
-<div class="ghirlanda" aria-hidden="true"></div>
+<div class="luminite" aria-hidden="true"></div>
 <div class="raft" aria-hidden="true"></div>
 <div class="zapada" id="zapada" aria-hidden="true"></div>
 
@@ -141,14 +273,54 @@ main{position:relative;z-index:1}
 <!-- 1. Ecranul de întâmpinare -->
 <section id="ecran-intampinare" class="ecran activ" aria-labelledby="titlu-1">
  <div class="card">
-  <div class="scena">
-   <svg class="copac" viewBox="0 0 100 140" aria-hidden="true"><use xlink:href="#brad"/></svg>
-   <svg class="robot" viewBox="0 0 100 110" style="color:#9dbba0" role="img" aria-label="Un roboțel simpatic cu căciulă de Moș Crăciun"><use xlink:href="#robot"/></svg>
-   <svg class="copac" viewBox="0 0 100 140" aria-hidden="true"><use xlink:href="#brad"/></svg>
+  <svg class="crenga c1" viewBox="0 0 60 40" aria-hidden="true"><use xlink:href="#crenguta"/></svg>
+  <svg class="crenga c2" viewBox="0 0 60 40" aria-hidden="true"><use xlink:href="#crenguta"/></svg>
+  <h1 id="titlu-1" class="titlu-mare">La mulți ani, doamna Adriana! ❤️</h1>
+
+  <div class="scena-tort">
+   <svg class="baloane" viewBox="0 0 100 150" aria-hidden="true"><use xlink:href="#baloane"/></svg>
+
+   <svg class="t-tort" viewBox="0 0 140 150" role="img" aria-label="Un tort de zi de naștere, cu lumânări aprinse">
+    <ellipse cx="70" cy="141" rx="64" ry="7" fill="#e9dcc0" stroke="#b8923a" stroke-width="2"/>
+    <g stroke="#9b6a6a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+     <!-- etajul de jos -->
+     <rect x="14" y="94" width="112" height="44" rx="9" fill="#f6c9d0"/>
+     <rect x="16" y="116" width="108" height="8" fill="#fffaf0" stroke="none"/>
+     <g fill="#e6b94a" stroke="none">
+      <circle cx="28" cy="131" r="3"/><circle cx="48" cy="131" r="3"/><circle cx="68" cy="131" r="3"/><circle cx="88" cy="131" r="3"/><circle cx="108" cy="131" r="3"/>
+     </g>
+     <!-- etajul de sus -->
+     <rect x="34" y="58" width="72" height="32" rx="7" fill="#d3e3cf"/>
+     <g fill="#e6b94a" stroke="none">
+      <circle cx="46" cy="84" r="2.6"/><circle cx="58" cy="84" r="2.6"/><circle cx="70" cy="84" r="2.6"/><circle cx="82" cy="84" r="2.6"/><circle cx="94" cy="84" r="2.6"/>
+     </g>
+     <!-- glazura etajului de jos -->
+     <path d="M18 88H122Q128 88 128 94Q128 100 122 100H116V106Q116 112 111 112Q106 112 106 106V100H98V104Q98 109 94 109Q90 109 90 104V100H74V112Q74 118 69 118Q64 118 64 112V100H50V105Q50 110 46 110Q42 110 42 105V100H28V108Q28 114 23 114Q18 114 18 108V100Q12 100 12 94Q12 88 18 88Z" fill="#fffaf0"/>
+     <!-- lumânări -->
+     <rect x="45.5" y="36" width="5" height="19" rx="1.5" fill="#e6b94a"/>
+     <rect x="56.5" y="36" width="5" height="19" rx="1.5" fill="#f4a6b4"/>
+     <rect x="67.5" y="36" width="5" height="19" rx="1.5" fill="#9dbba0"/>
+     <rect x="78.5" y="36" width="5" height="19" rx="1.5" fill="#f4a6b4"/>
+     <rect x="89.5" y="36" width="5" height="19" rx="1.5" fill="#e6b94a"/>
+     <!-- glazura etajului de sus -->
+     <path d="M38 54H102Q108 54 108 59Q108 64 102 64H98V69Q98 74 94 74Q90 74 90 69V64H70V73Q70 78 66 78Q62 78 62 73V64H48V69Q48 74 44 74Q40 74 40 69V64H38Q32 64 32 59Q32 54 38 54Z" fill="#fffaf0"/>
+    </g>
+    <!-- flăcări -->
+    <g class="flacara" style="animation-delay:0s"><path d="M48 22Q53 29 48 35Q43 29 48 22Z" fill="#ffc94d" stroke="#e08a2a" stroke-width="1.4"/><ellipse cx="48" cy="30" rx="1.6" ry="3" fill="#fff7d6"/></g>
+    <g class="flacara" style="animation-delay:.25s"><path d="M59 22Q64 29 59 35Q54 29 59 22Z" fill="#ffc94d" stroke="#e08a2a" stroke-width="1.4"/><ellipse cx="59" cy="30" rx="1.6" ry="3" fill="#fff7d6"/></g>
+    <g class="flacara" style="animation-delay:.5s"><path d="M70 22Q75 29 70 35Q65 29 70 22Z" fill="#ffc94d" stroke="#e08a2a" stroke-width="1.4"/><ellipse cx="70" cy="30" rx="1.6" ry="3" fill="#fff7d6"/></g>
+    <g class="flacara" style="animation-delay:.15s"><path d="M81 22Q86 29 81 35Q76 29 81 22Z" fill="#ffc94d" stroke="#e08a2a" stroke-width="1.4"/><ellipse cx="81" cy="30" rx="1.6" ry="3" fill="#fff7d6"/></g>
+    <g class="flacara" style="animation-delay:.4s"><path d="M92 22Q97 29 92 35Q87 29 92 22Z" fill="#ffc94d" stroke="#e08a2a" stroke-width="1.4"/><ellipse cx="92" cy="30" rx="1.6" ry="3" fill="#fff7d6"/></g>
+    <!-- două crenguțe mici de brad la baza tortului (accent discret de iarnă) -->
+    <use xlink:href="#crenguta" x="0" y="123" width="40" height="27"/>
+    <use xlink:href="#crenguta" x="0" y="123" width="40" height="27" transform="translate(140 0) scale(-1 1)"/>
+   </svg>
+
+   <svg class="robot" viewBox="0 0 100 110" style="color:#9dbba0" role="img" aria-label="Un roboțel simpatic cu antenă"><use xlink:href="#robot"/></svg>
   </div>
-  <h1 id="titlu-1">La mulți ani, doamna Adriana! ❤️</h1>
-  <p class="subtitlu">Am pregătit o mică surpriză de Crăciun pentru dumneavoastră!</p>
-  <button type="button" class="btn" id="btn-aventura">Începe aventura de Crăciun!</button>
+
+  <p class="subtitlu">Am pregătit o mică surpriză special pentru ziua dumneavoastră!</p>
+  <button type="button" class="btn" id="btn-aventura">Începe surpriza!</button>
  </div>
 </section>
 
@@ -169,17 +341,17 @@ main{position:relative;z-index:1}
 <!-- 3. Mini-jocul -->
 <section id="ecran-joc" class="ecran" aria-labelledby="titlu-3">
  <div id="joc-zona" style="width:100%">
-  <h2 id="titlu-3" class="titlu-joc" style="text-align:center">Prinde roboțeii de Crăciun!</h2>
+  <h2 id="titlu-3" class="titlu-joc" style="text-align:center">Prinde roboțeii cu cadouri!</h2>
   <div class="panza-wrap" id="panza-wrap">
    <div class="hud"><span>Scor: <b id="hud-scor">0</b></span><span>Timp: <b id="hud-timp">30</b> s</span></div>
-   <canvas id="panza" width="300" height="300" aria-label="Zona jocului: prindeți roboțeii care cad"></canvas>
+   <canvas id="panza" width="300" height="300" aria-label="Zona jocului: prindeți roboțeii care vă aduc cadouri"></canvas>
 
    <div class="overlay" id="ov-start">
-    <h3>Prinde roboțeii de Crăciun!</h3>
+    <h3>Roboțeii vă aduc cadouri!</h3>
     <ul class="instr">
      <li>Pe calculator: folosiți tastele ← și →.</li>
      <li>Pe telefon: atingeți și glisați degetul pe ecran.</li>
-     <li>Fiecare roboțel prins valorează 10 puncte, iar cei aurii 30 de puncte.</li>
+     <li>Roboțeii cad cu câte un cadou de ziua dumneavoastră: fiecare prins valorează 10 puncte, iar cei aurii 30 de puncte.</li>
      <li>Aveți 30 de secunde la dispoziție.</li>
     </ul>
     <button type="button" class="btn" id="btn-start-joc">Hai să prindem roboțeii!</button>
@@ -188,7 +360,7 @@ main{position:relative;z-index:1}
    <div class="overlay ascuns" id="ov-final">
     <h3>Timpul a expirat!</h3>
     <p>Scorul dumneavoastră: <span class="scor-mare" id="scor-final">0</span> puncte</p>
-    <p class="bravo">Bravo, doamna Adriana! Ați salvat Crăciunul roboticii!</p>
+    <p class="bravo">Bravo, doamna Adriana! Roboțeii v-au adus cadourile de ziua dumneavoastră!</p>
     <div>
      <button type="button" class="btn" id="btn-din-nou">Joacă din nou</button>
      <button type="button" class="btn btn-sec" id="btn-spre-final">Continuă</button>
@@ -198,27 +370,146 @@ main{position:relative;z-index:1}
  </div>
 </section>
 
-<!-- 4. Surpriza finală -->
+<!-- 4. Felicitarea de final (după joc) -->
 <section id="ecran-final" class="ecran" aria-labelledby="titlu-4">
  <div class="card">
+  <svg class="crenga c1" viewBox="0 0 60 40" aria-hidden="true"><use xlink:href="#crenguta"/></svg>
+  <svg class="crenga c2" viewBox="0 0 60 40" aria-hidden="true"><use xlink:href="#crenguta"/></svg>
   <div class="scena">
    <svg class="robot mic" viewBox="0 0 100 110" style="color:#9dbba0" aria-hidden="true"><use xlink:href="#robot"/></svg>
-   <svg class="copac-mare" viewBox="0 0 100 140" aria-hidden="true">
-    <use xlink:href="#brad"/>
-    <circle class="bec" cx="42" cy="40" r="2.8" fill="#fff3b0"/>
-    <circle class="bec" style="animation-delay:.4s" cx="58" cy="62" r="2.8" fill="#fff3b0"/>
-    <circle class="bec" style="animation-delay:.8s" cx="32" cy="92" r="2.8" fill="#fff3b0"/>
-    <circle class="bec" style="animation-delay:.2s" cx="68" cy="90" r="2.8" fill="#fff3b0"/>
-    <circle class="bec" style="animation-delay:.6s" cx="40" cy="112" r="2.8" fill="#fff3b0"/>
-    <circle class="bec" style="animation-delay:1s" cx="60" cy="114" r="2.8" fill="#fff3b0"/>
+   <svg class="baloane" viewBox="0 0 100 150" aria-hidden="true">
+    <use xlink:href="#baloane"/>
+    <use xlink:href="#stea" x="2" y="4" width="14" height="14" class="bec"/>
+    <use xlink:href="#stea" x="84" y="14" width="12" height="12" class="bec" style="animation-delay:.6s"/>
+    <use xlink:href="#stea" x="76" y="96" width="10" height="10" class="bec" style="animation-delay:1s"/>
    </svg>
-   <svg class="robot mic" viewBox="0 0 100 110" style="color:#e8b840;animation-delay:-1.4s" aria-hidden="true"><use xlink:href="#robot"/></svg>
+   <svg class="robot mic" viewBox="0 0 100 110" style="color:#e8b840;animation-delay:-1.4s" aria-hidden="true"><use xlink:href="#robot-cadou"/></svg>
   </div>
   <h2 id="titlu-4" class="ascuns">Felicitarea de final</h2>
   <p class="final-text">Sperăm că v-am adus un zâmbet pe buze! La mulți ani frumoși și fericiți alături de cei dragi!</p>
   <button type="button" class="btn" id="btn-surpriza">O ultimă surpriză</button>
-  <div id="mesaj-final-zona" aria-live="polite">
-   <p class="mesaj-final ascuns" id="mesaj-final">Vă mulțumesc pentru tot ajutorul și pentru toate momentele frumoase de la clubul de robotică! Mă bucur mult că vă am alături și vă doresc o zi minunată!</p>
+ </div>
+</section>
+
+<!-- 5. Surpriza: buchetul care înflorește + mesajul personal -->
+<section id="ecran-buchet" class="ecran" aria-labelledby="titlu-5">
+ <div class="card card-buchet">
+  <div class="buchet-layout">
+
+   <div class="buchet-scena" role="img" aria-label="Un buchet de trandafiri, lalele și flori mici care înfloresc treptat">
+    <div class="buchet" aria-hidden="true">
+
+     <!-- tulpini, frunze, hârtie de buchet și fundă -->
+     <svg class="buchet-baza" viewBox="0 0 100 115" aria-hidden="true">
+      <g fill="none" stroke="#5f8a69" stroke-width="1.6" stroke-linecap="round">
+       <path d="M50 40L50 82"/>
+       <path d="M26 42Q34 66 50 82"/>
+       <path d="M74 42Q66 66 50 82"/>
+       <path d="M36 24Q40 56 50 82"/>
+       <path d="M64 24Q60 56 50 82"/>
+       <path d="M12 56Q22 72 50 82"/>
+       <path d="M88 56Q78 72 50 82"/>
+       <path d="M50 16Q47 50 50 82"/>
+       <path d="M10 38Q20 70 50 82"/>
+       <path d="M90 38Q80 70 50 82"/>
+       <path d="M38 62Q42 74 50 82"/>
+       <path d="M62 62Q58 74 50 82"/>
+      </g>
+      <g fill="#7aa883" stroke="#4a5d4f" stroke-width="1" stroke-linejoin="round">
+       <path d="M44 70Q20 56 12 60Q22 76 44 70Z"/>
+       <path d="M56 70Q80 56 88 60Q78 76 56 70Z"/>
+      </g>
+      <path d="M12 66L88 66L62 113L38 113Z" fill="#f4b6c2" stroke="#c98d99" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M26 72L74 72L58 112L42 112Z" fill="#fffaf0" stroke="#c98d99" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M24 84L76 84L75 90L25 90Z" fill="#e6b94a" stroke="#b8923a" stroke-width="1"/>
+      <path d="M50 87Q36 76 32 88Q38 94 50 87Z" fill="#e6b94a" stroke="#b8923a" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M50 87Q64 76 68 88Q62 94 50 87Z" fill="#e6b94a" stroke="#b8923a" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M48 90L42 104M52 90L58 104" fill="none" stroke="#e6b94a" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="50" cy="87" r="3.5" fill="#f0c24a" stroke="#b8923a" stroke-width="1"/>
+     </svg>
+
+     <!-- lalele -->
+     <div class="floare d6" style="left:4.5%;top:35.7%;width:15%;height:15.7%">
+      <svg class="mugur" viewBox="0 0 100 120" style="color:#f2a08e"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 100 120" style="color:#f2a08e"><use xlink:href="#f-lalea"/></svg>
+     </div>
+     <div class="floare d7" style="left:80.5%;top:35.7%;width:15%;height:15.7%">
+      <svg class="mugur" viewBox="0 0 100 120" style="color:#f6cf6e"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 100 120" style="color:#f6cf6e"><use xlink:href="#f-lalea"/></svg>
+     </div>
+     <div class="floare d4" style="left:28%;top:5.6%;width:16%;height:16.7%">
+      <svg class="mugur" viewBox="0 0 100 120" style="color:#f6cf6e"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 100 120" style="color:#f6cf6e"><use xlink:href="#f-lalea"/></svg>
+     </div>
+     <div class="floare d5" style="left:56%;top:5.6%;width:16%;height:16.7%">
+      <svg class="mugur" viewBox="0 0 100 120" style="color:#c9a8dc"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 100 120" style="color:#c9a8dc"><use xlink:href="#f-lalea"/></svg>
+     </div>
+
+     <!-- flori mici decorative -->
+     <div class="floare d8" style="left:44%;top:3.5%;width:12%;height:10.4%">
+      <svg class="mugur" viewBox="0 0 60 60" style="color:#fffaf0"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 60 60" style="color:#fffaf0"><use xlink:href="#f-floare"/></svg>
+     </div>
+     <div class="floare d9" style="left:4.5%;top:24.8%;width:11%;height:9.6%">
+      <svg class="mugur" viewBox="0 0 60 60" style="color:#fffaf0"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 60 60" style="color:#fffaf0"><use xlink:href="#f-floare"/></svg>
+     </div>
+     <div class="floare d10" style="left:84.5%;top:24.8%;width:11%;height:9.6%">
+      <svg class="mugur" viewBox="0 0 60 60" style="color:#bcd3f2"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 60 60" style="color:#bcd3f2"><use xlink:href="#f-floare"/></svg>
+     </div>
+     <div class="floare d11" style="left:32%;top:43.5%;width:12%;height:10.4%">
+      <svg class="mugur" viewBox="0 0 60 60" style="color:#fff1a8"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 60 60" style="color:#fff1a8"><use xlink:href="#f-floare"/></svg>
+     </div>
+     <div class="floare d12" style="left:56%;top:43.5%;width:12%;height:10.4%">
+      <svg class="mugur" viewBox="0 0 60 60" style="color:#f9c4d4"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 60 60" style="color:#f9c4d4"><use xlink:href="#f-floare"/></svg>
+     </div>
+
+     <!-- trandafiri (în față) -->
+     <div class="floare d2" style="left:14%;top:22.6%;width:24%;height:20.9%">
+      <svg class="mugur" viewBox="0 0 100 100" style="color:#f4b0bf"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 100 100" style="color:#f4b0bf"><use xlink:href="#f-trandafir"/></svg>
+     </div>
+     <div class="floare d3" style="left:62%;top:22.6%;width:24%;height:20.9%">
+      <svg class="mugur" viewBox="0 0 100 100" style="color:#d96a84"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 100 100" style="color:#d96a84"><use xlink:href="#f-trandafir"/></svg>
+     </div>
+     <div class="floare d1" style="left:36%;top:19.1%;width:28%;height:24.3%">
+      <svg class="mugur" viewBox="0 0 100 100" style="color:#e8869c"><use xlink:href="#f-mugur"/></svg>
+      <svg class="desch" viewBox="0 0 100 100" style="color:#e8869c"><use xlink:href="#f-trandafir"/></svg>
+     </div>
+    </div>
+
+    <!-- petale plutitoare (puține) -->
+    <div class="petale" aria-hidden="true">
+     <span class="petala p1" style="left:12%;background:#f4b6c2;animation-delay:3s"></span>
+     <span class="petala p2" style="left:30%;background:#f9d3dc;animation-delay:5.5s"></span>
+     <span class="petala p1" style="left:48%;background:#e8869c;animation-delay:7s"></span>
+     <span class="petala p2" style="left:66%;background:#f4b6c2;animation-delay:4.2s"></span>
+     <span class="petala p1" style="left:82%;background:#f9d3dc;animation-delay:8.5s"></span>
+     <span class="petala p2" style="left:22%;background:#fff1b0;animation-delay:9.5s"></span>
+    </div>
+
+    <!-- sclipiri discrete -->
+    <svg class="sclip" style="left:3%;top:12%;animation-delay:1.8s" viewBox="0 0 20 20" aria-hidden="true"><use xlink:href="#stea"/></svg>
+    <svg class="sclip" style="left:90%;top:9%;animation-delay:2.6s" viewBox="0 0 20 20" aria-hidden="true"><use xlink:href="#stea"/></svg>
+    <svg class="sclip" style="left:1%;top:46%;animation-delay:3.4s" viewBox="0 0 20 20" aria-hidden="true"><use xlink:href="#stea"/></svg>
+    <svg class="sclip" style="left:93%;top:42%;animation-delay:2.2s" viewBox="0 0 20 20" aria-hidden="true"><use xlink:href="#stea"/></svg>
+    <svg class="sclip" style="left:21%;top:1%;animation-delay:4s" viewBox="0 0 20 20" aria-hidden="true"><use xlink:href="#stea"/></svg>
+    <svg class="sclip" style="left:76%;top:2%;animation-delay:3s" viewBox="0 0 20 20" aria-hidden="true"><use xlink:href="#stea"/></svg>
+    <svg class="sclip" style="left:80%;top:66%;animation-delay:4.6s" viewBox="0 0 20 20" aria-hidden="true"><use xlink:href="#stea"/></svg>
+   </div>
+
+   <div class="mesaj-buchet">
+    <h2 id="titlu-5">La mulți ani frumoși și fericiți, doamna Adriana!</h2>
+    <p>Sper ca această zi să vă aducă multă bucurie, zâmbete și momente frumoase alături de cei dragi.</p>
+    <p>Vă mulțumesc pentru tot ajutorul, pentru răbdare și pentru toate momentele frumoase de la clubul de robotică.</p>
+    <p>Mă bucur mult că vă am alături și vă doresc o zi minunată!</p>
+   </div>
+
   </div>
  </div>
 </section>
@@ -236,23 +527,23 @@ main{position:relative;z-index:1}
     for (var i = 0; i < sections.length; i++) {
       sections[i].className = (sections[i].id === id) ? 'ecran activ' : 'ecran';
     }
-    document.body.className = (id === 'ecran-joc') ? 'in-joc' : '';
+    document.body.className = (id === 'ecran-joc') ? 'in-joc' : ((id === 'ecran-buchet') ? 'in-buchet' : '');
     window.scrollTo(0, 0);
     if (id === 'ecran-joc') { prepareGame(); } else { stopGame(); }
   }
 
-  /* ===== Fulgi de zăpadă (puțini, doar CSS) ===== */
+  /* ===== Câțiva fulgi foarte fini (doar CSS, puțini) ===== */
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduceMotion) {
     var snowBox = document.getElementById('zapada');
-    for (var f = 0; f < 14; f++) {
+    for (var f = 0; f < 7; f++) {
       var flake = document.createElement('span');
-      var size = 4 + Math.random() * 5;
+      var size = 2 + Math.random() * 2.5;
       flake.style.left = (Math.random() * 100) + '%';
       flake.style.width = size + 'px';
       flake.style.height = size + 'px';
-      flake.style.animationDuration = (9 + Math.random() * 8) + 's';
-      flake.style.animationDelay = (-Math.random() * 14) + 's';
+      flake.style.animationDuration = (12 + Math.random() * 9) + 's';
+      flake.style.animationDelay = (-Math.random() * 18) + 's';
       snowBox.appendChild(flake);
     }
   }
@@ -298,6 +589,7 @@ main{position:relative;z-index:1}
     return c;
   }
 
+  /* Roboțel care aduce un cadou pe cap */
   function buildRobotSprite(gold) {
     var c = makeSprite(robotSize, robotHeight);
     var g = c.getContext('2d');
@@ -322,13 +614,16 @@ main{position:relative;z-index:1}
     g.lineWidth = 2;
     g.beginPath(); g.moveTo(43, 63); g.quadraticCurveTo(50, 69, 57, 63); g.stroke();
     g.fillStyle = 'rgba(240,150,165,0.8)'; dot(g, 35, 65, 3); dot(g, 65, 65, 3);
-    g.lineWidth = 2.5;
-    g.fillStyle = '#d9534f';
-    g.beginPath(); g.moveTo(27, 36); g.quadraticCurveTo(40, 6, 66, 12); g.quadraticCurveTo(62, 24, 73, 36);
-    g.closePath(); fillStroke(g);
-    g.fillStyle = '#fff';
-    roundRect(g, 24, 32, 52, 9, 4.5); fillStroke(g);
-    g.beginPath(); g.arc(66, 12, 6, 0, TWO_PI); fillStroke(g);
+    /* cadoul de pe cap */
+    g.lineWidth = 2;
+    g.fillStyle = gold ? '#fff3c4' : '#f4b6bd';
+    roundRect(g, 38, 22, 24, 16, 2); fillStroke(g);
+    g.fillStyle = '#fffaf0';
+    roundRect(g, 36, 17, 28, 7, 2); fillStroke(g);
+    g.fillStyle = '#e8b840';
+    g.fillRect(48, 17, 4, 21);
+    g.beginPath(); g.arc(45, 13, 4, 0, TWO_PI); fillStroke(g);
+    g.beginPath(); g.arc(55, 13, 4, 0, TWO_PI); fillStroke(g);
     return c;
   }
 
@@ -348,9 +643,10 @@ main{position:relative;z-index:1}
     g.stroke();
     g.lineWidth = 2.5; g.fillStyle = '#e6c27a';
     roundRect(g, 2, 4, 96, 10, 5); fillStroke(g);
-    g.fillStyle = '#d9534f'; g.lineWidth = 2;
+    g.fillStyle = '#f08fa3'; g.lineWidth = 2;
     g.beginPath(); g.arc(43, 9, 5, 0, TWO_PI); fillStroke(g);
     g.beginPath(); g.arc(57, 9, 5, 0, TWO_PI); fillStroke(g);
+    g.fillStyle = '#fff3c4';
     g.beginPath(); g.arc(50, 9, 3.5, 0, TWO_PI); fillStroke(g);
     return c;
   }
@@ -600,12 +896,7 @@ main{position:relative;z-index:1}
   document.getElementById('btn-start-joc').addEventListener('click', startGame, false);
   document.getElementById('btn-din-nou').addEventListener('click', startGame, false);
   document.getElementById('btn-spre-final').addEventListener('click', function () { showScreen('ecran-final'); }, false);
-
-  var btnSurpriza = document.getElementById('btn-surpriza');
-  btnSurpriza.addEventListener('click', function () {
-    document.getElementById('mesaj-final').className = 'mesaj-final';
-    btnSurpriza.className = 'btn ascuns';
-  }, false);
+  document.getElementById('btn-surpriza').addEventListener('click', function () { showScreen('ecran-buchet'); }, false);
 })();
 </script>
 </body>
