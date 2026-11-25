@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La mulți ani, doamna Adriana!</title>
+<style>
+/* ===== Bază ===== */
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.5;color:#3f4a3f;background:#f6ecd8;background:linear-gradient(#fbf4e6,#f1e3cb);-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:#476650;margin:10px 0}
+h1{font-size:1.9rem;line-height:1.2}
+h2{font-size:1.6rem;line-height:1.25}
+h3{font-size:1.3rem}
+p{margin:10px 0}
+
+/* ===== Decor fix: ghirlandă, raft cu cărți, zăpadă ===== */
+.ghirlanda{position:fixed;left:0;right:0;top:0;height:22px;z-index:2;pointer-events:none;
+background-image:radial-gradient(circle 4px at 10px 12px,#e6b94a 90%,rgba(0,0,0,0)),radial-gradient(circle 4px at 30px 12px,#eba0aa 90%,rgba(0,0,0,0)),radial-gradient(circle 4px at 50px 12px,#9dbba0 90%,rgba(0,0,0,0)),radial-gradient(circle 4px at 70px 12px,#fff1b0 90%,rgba(0,0,0,0)),linear-gradient(#c9a85c,#c9a85c);
+background-size:80px 22px,80px 22px,80px 22px,80px 22px,100% 2px;
+background-position:0 0,0 0,0 0,0 0,0 5px;background-repeat:repeat-x;animation:puls 2.6s ease-in-out infinite alternate}
+.raft{position:fixed;left:0;right:0;bottom:0;height:46px;z-index:0;pointer-events:none;border-top:7px solid #b98a5a;opacity:.92;
+background-image:repeating-linear-gradient(90deg,#d99aa0 0,#d99aa0 12px,#fbf4e6 12px,#fbf4e6 13px,#8fae96 13px,#8fae96 29px,#fbf4e6 29px,#fbf4e6 30px,#e6c27a 30px,#e6c27a 41px,#fbf4e6 41px,#fbf4e6 42px,#b9a5cc 42px,#b9a5cc 58px,#fbf4e6 58px,#fbf4e6 59px,#7e9f8a 59px,#7e9f8a 70px,#fbf4e6 70px,#fbf4e6 71px,#e9b9a6 71px,#e9b9a6 87px,#fbf4e6 87px,#fbf4e6 88px)}
+.zapada{position:fixed;left:0;right:0;top:0;bottom:0;z-index:3;pointer-events:none;overflow:hidden}
+.zapada span{position:absolute;top:-12px;background:#fff;border-radius:50%;box-shadow:0 0 0 1px #d6e2d8;opacity:.9;animation:cade linear infinite}
+.in-joc .zapada{display:none}
+.in-joc .ghirlanda{animation:none}
+
+/* ===== Ecrane și carduri ===== */
+main{position:relative;z-index:1}
+.ecran{display:none;min-height:100vh;padding:38px 14px 72px;align-items:center;justify-content:center}
+.ecran.activ{display:flex}
+.card{position:relative;width:100%;max-width:640px;margin:0 auto;padding:22px 18px;text-align:center;background:#fffaf0;border:3px solid #d4a84b;border-radius:22px;box-shadow:0 6px 0 #c9d6c3,0 10px 18px rgba(80,70,40,.18)}
+.card:after{content:"";position:absolute;left:7px;top:7px;right:7px;bottom:7px;border:2px dashed #e3cf95;border-radius:16px;pointer-events:none}
+.subtitlu{font-size:1.2rem;color:#6a5a45;font-style:italic}
+.scena{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin-bottom:6px}
+.copac{width:22vw;max-width:105px;height:auto}
+.robot{width:34vw;max-width:150px;height:auto;animation:plutire 3s ease-in-out infinite alternate}
+.robot.mic{width:22vw;max-width:90px;animation-duration:3.6s}
+.copac-mare{width:34vw;max-width:150px;height:auto}
+.mesaj p{text-align:left;font-size:1.1rem;line-height:1.65}
+.mesaj h2{text-align:center}
+.final-text{font-size:1.25rem;color:#4f6b55;line-height:1.55}
+.mesaj-final{margin-top:16px;padding:14px;text-align:left;font-size:1.12rem;line-height:1.6;background:#fdecee;border:2px solid #f0c9c9;border-radius:16px;animation:aparitie .9s both}
+
+/* ===== Butoane ===== */
+.btn{display:inline-block;min-height:52px;min-width:210px;max-width:100%;margin:12px 4px 0;padding:12px 24px;font:bold 1.1rem Georgia,"Times New Roman",serif;color:#3b3020;background:#e6c26a;border:2px solid #b8923a;border-radius:30px;box-shadow:0 4px 0 #b8923a;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #b8923a}
+.btn:focus{outline:3px solid #5f8a69;outline-offset:2px}
+.btn-sec{background:#d3e3cf;border-color:#7e9f8a;box-shadow:0 4px 0 #7e9f8a}
+.btn-sec:active{box-shadow:0 1px 0 #7e9f8a}
+.ascuns{display:none !important}
+
+/* ===== Joc ===== */
+#joc-zona{max-width:660px;margin:0 auto}
+.panza-wrap{position:relative;margin:0 auto;overflow:hidden;border:3px solid #d4a84b;border-radius:16px;background:#fdf8ec;background:linear-gradient(#fdf8ec,#f6e9d3);text-align:left}
+.hud{display:flex;justify-content:space-between;gap:8px;padding:6px 8px;background:#e7efe3;border-bottom:2px solid #c9d6c3;font-weight:bold;color:#3f5a47}
+.hud span{background:#fff;border:2px solid #9dbba0;border-radius:18px;padding:2px 14px;min-width:100px;text-align:center}
+#panza{display:block;touch-action:none;-ms-touch-action:none;-webkit-user-select:none;user-select:none}
+.overlay{position:absolute;left:0;top:0;right:0;bottom:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 14px;text-align:center;overflow:auto;background:rgba(251,244,230,.96)}
+.overlay h3{margin:4px 0}
+.overlay p{margin:5px 0}
+.instr{list-style:none;margin:6px 0;padding:0;font-size:1rem}
+.instr li{margin:4px 0}
+.scor-mare{font-size:1.5rem;font-weight:bold;color:#b2495a}
+.bravo{font-size:1.2rem;color:#476650;font-weight:bold}
+.overlay .btn{margin-top:8px;min-height:48px}
+
+/* ===== Animații (simple, doar transform / opacity) ===== */
+@keyframes plutire{from{transform:translateY(0)}to{transform:translateY(-7px)}}
+@keyframes cade{to{transform:translateY(108vh)}}
+@keyframes sclipire{from{opacity:.2}to{opacity:1}}
+@keyframes puls{from{opacity:.65}to{opacity:1}}
+@keyframes aparitie{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.bec{animation:sclipire 1.2s ease-in-out infinite alternate}
+
+@media (min-width:600px){h1{font-size:2.5rem}h2{font-size:2rem}.card{padding:30px 34px}}
+@media (max-height:480px){
+ .ecran{padding:30px 10px 54px}
+ h1{font-size:1.5rem}.subtitlu{font-size:1rem}
+ .copac{width:60px}.robot{width:84px}.robot.mic{width:60px}.copac-mare{width:84px}
+ .titlu-joc{display:none}
+ .overlay{padding:4px 10px}.instr{font-size:.85rem}.instr li{margin:2px 0}
+ .overlay h3{font-size:1.05rem;margin:2px 0}.overlay p{margin:3px 0;font-size:.9rem}
+ .scor-mare{font-size:1.1rem}.bravo{font-size:.95rem}
+ .overlay .btn{min-height:42px;margin-top:4px;padding:6px 16px;font-size:.95rem}
+ .raft{height:30px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+
+<!-- Simboluri SVG reutilizabile: robotel și brad -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+ <symbol id="robot" viewBox="0 0 100 110">
+  <g stroke="#4a5d4f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+   <rect x="36" y="100" width="10" height="7" rx="3" fill="#4a5d4f"/>
+   <rect x="54" y="100" width="10" height="7" rx="3" fill="#4a5d4f"/>
+   <rect x="14" y="82" width="14" height="9" rx="4" fill="currentColor"/>
+   <rect x="72" y="82" width="14" height="9" rx="4" fill="currentColor"/>
+   <rect x="30" y="76" width="40" height="26" rx="9" fill="currentColor"/>
+   <circle cx="50" cy="89" r="5" fill="#f4b6bd" stroke="none"/>
+   <rect x="22" y="38" width="56" height="40" rx="12" fill="currentColor"/>
+   <rect x="29" y="46" width="42" height="26" rx="8" fill="#fffaf0" stroke="none"/>
+   <circle cx="41" cy="57" r="4.5" fill="#4a5d4f" stroke="none"/>
+   <circle cx="59" cy="57" r="4.5" fill="#4a5d4f" stroke="none"/>
+   <circle cx="42.6" cy="55.4" r="1.6" fill="#fff" stroke="none"/>
+   <circle cx="60.6" cy="55.4" r="1.6" fill="#fff" stroke="none"/>
+   <path d="M43 63Q50 69 57 63" fill="none" stroke-width="2"/>
+   <circle cx="35" cy="65" r="3" fill="#f0a0ac" stroke="none" opacity=".8"/>
+   <circle cx="65" cy="65" r="3" fill="#f0a0ac" stroke="none" opacity=".8"/>
+   <path d="M27 36Q40 6 66 12Q62 24 73 36Z" fill="#d9534f"/>
+   <rect x="24" y="32" width="52" height="9" rx="4.5" fill="#fff"/>
+   <circle cx="66" cy="12" r="6" fill="#fff"/>
+  </g>
+ </symbol>
+ <symbol id="brad" viewBox="0 0 100 140">
+  <g stroke="#4a5d4f" stroke-width="2" stroke-linejoin="round">
+   <rect x="44" y="118" width="12" height="16" fill="#a9784a"/>
+   <polygon points="50,58 94,120 6,120" fill="#6f9a78"/>
+   <polygon points="50,34 88,86 12,86" fill="#7aa883"/>
+   <polygon points="50,14 82,56 18,56" fill="#88b690"/>
+   <polygon points="50,2 53,9 60,9 54,14 56,21 50,17 44,21 46,14 40,9 47,9" fill="#e6b94a" stroke="#b8923a" stroke-width="1.5"/>
+  </g>
+  <circle cx="50" cy="44" r="3.5" fill="#e6b94a"/><circle cx="40" cy="78" r="3.5" fill="#f0c9c9"/>
+  <circle cx="62" cy="72" r="3.5" fill="#e6b94a"/><circle cx="30" cy="108" r="4" fill="#e6b94a"/>
+  <circle cx="50" cy="98" r="4" fill="#f0c9c9"/><circle cx="70" cy="108" r="4" fill="#f0c9c9"/>
+ </symbol>
+</svg>
+
+<div class="ghirlanda" aria-hidden="true"></div>
+<div class="raft" aria-hidden="true"></div>
+<div class="zapada" id="zapada" aria-hidden="true"></div>
+
+<noscript><p style="text-align:center;padding:20px">Pentru a vedea surpriza, vă rugăm să activați JavaScript în browser.</p></noscript>
+
+<main>
+
+<!-- 1. Ecranul de întâmpinare -->
+<section id="ecran-intampinare" class="ecran activ" aria-labelledby="titlu-1">
+ <div class="card">
+  <div class="scena">
+   <svg class="copac" viewBox="0 0 100 140" aria-hidden="true"><use xlink:href="#brad"/></svg>
+   <svg class="robot" viewBox="0 0 100 110" style="color:#9dbba0" role="img" aria-label="Un roboțel simpatic cu căciulă de Moș Crăciun"><use xlink:href="#robot"/></svg>
+   <svg class="copac" viewBox="0 0 100 140" aria-hidden="true"><use xlink:href="#brad"/></svg>
+  </div>
+  <h1 id="titlu-1">La mulți ani, doamna Adriana! ❤️</h1>
+  <p class="subtitlu">Am pregătit o mică surpriză de Crăciun pentru dumneavoastră!</p>
+  <button type="button" class="btn" id="btn-aventura">Începe aventura de Crăciun!</button>
+ </div>
+</section>
+
+<!-- 2. Mesajul de felicitare -->
+<section id="ecran-mesaj" class="ecran" aria-labelledby="titlu-2">
+ <div class="card mesaj">
+  <div class="scena">
+   <svg class="robot mic" viewBox="0 0 100 110" style="color:#f0b6bd" aria-hidden="true"><use xlink:href="#robot"/></svg>
+  </div>
+  <h2 id="titlu-2">La mulți ani, doamna Adriana! ❤️</h2>
+  <p>Ne bucurăm mult că vă avem alături de noi și vă mulțumim pentru tot ajutorul și sprijinul pe care ni le-ați oferit la clubul de robotică. Apreciem toate momentele în care ne-ați îndrumat, ne-ați încurajat și ne-ați ajutat să mergem mai departe cu ideile noastre.</p>
+  <p>Sperăm ca ziua de astăzi să vă aducă multă bucurie, zâmbete și momente frumoase alături de cei dragi.</p>
+  <p>Vă dorim multă sănătate, fericire și cât mai multe zile frumoase!</p>
+  <div style="text-align:center"><button type="button" class="btn" id="btn-spre-joc">Continuă spre joc</button></div>
+ </div>
+</section>
+
+<!-- 3. Mini-jocul -->
+<section id="ecran-joc" class="ecran" aria-labelledby="titlu-3">
+ <div id="joc-zona" style="width:100%">
+  <h2 id="titlu-3" class="titlu-joc" style="text-align:center">Prinde roboțeii de Crăciun!</h2>
+  <div class="panza-wrap" id="panza-wrap">
+   <div class="hud"><span>Scor: <b id="hud-scor">0</b></span><span>Timp: <b id="hud-timp">30</b> s</span></div>
+   <canvas id="panza" width="300" height="300" aria-label="Zona jocului: prindeți roboțeii care cad"></canvas>
+
+   <div class="overlay" id="ov-start">
+    <h3>Prinde roboțeii de Crăciun!</h3>
+    <ul class="instr">
+     <li>Pe calculator: folosiți tastele ← și →.</li>
+     <li>Pe telefon: atingeți și glisați degetul pe ecran.</li>
+     <li>Fiecare roboțel prins valorează 10 puncte, iar cei aurii 30 de puncte.</li>
+     <li>Aveți 30 de secunde la dispoziție.</li>
+    </ul>
+    <button type="button" class="btn" id="btn-start-joc">Hai să prindem roboțeii!</button>
+   </div>
+
+   <div class="overlay ascuns" id="ov-final">
+    <h3>Timpul a expirat!</h3>
+    <p>Scorul dumneavoastră: <span class="scor-mare" id="scor-final">0</span> puncte</p>
+    <p class="bravo">Bravo, doamna Adriana! Ați salvat Crăciunul roboticii!</p>
+    <div>
+     <button type="button" class="btn" id="btn-din-nou">Joacă din nou</button>
+     <button type="button" class="btn btn-sec" id="btn-spre-final">Continuă</button>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- 4. Surpriza finală -->
+<section id="ecran-final" class="ecran" aria-labelledby="titlu-4">
+ <div class="card">
+  <div class="scena">
+   <svg class="robot mic" viewBox="0 0 100 110" style="color:#9dbba0" aria-hidden="true"><use xlink:href="#robot"/></svg>
+   <svg class="copac-mare" viewBox="0 0 100 140" aria-hidden="true">
+    <use xlink:href="#brad"/>
+    <circle class="bec" cx="42" cy="40" r="2.8" fill="#fff3b0"/>
+    <circle class="bec" style="animation-delay:.4s" cx="58" cy="62" r="2.8" fill="#fff3b0"/>
+    <circle class="bec" style="animation-delay:.8s" cx="32" cy="92" r="2.8" fill="#fff3b0"/>
+    <circle class="bec" style="animation-delay:.2s" cx="68" cy="90" r="2.8" fill="#fff3b0"/>
+    <circle class="bec" style="animation-delay:.6s" cx="40" cy="112" r="2.8" fill="#fff3b0"/>
+    <circle class="bec" style="animation-delay:1s" cx="60" cy="114" r="2.8" fill="#fff3b0"/>
+   </svg>
+   <svg class="robot mic" viewBox="0 0 100 110" style="color:#e8b840;animation-delay:-1.4s" aria-hidden="true"><use xlink:href="#robot"/></svg>
+  </div>
+  <h2 id="titlu-4" class="ascuns">Felicitarea de final</h2>
+  <p class="final-text">Sperăm că v-am adus un zâmbet pe buze! La mulți ani frumoși și fericiți alături de cei dragi!</p>
+  <button type="button" class="btn" id="btn-surpriza">O ultimă surpriză</button>
+  <div id="mesaj-final-zona" aria-live="polite">
+   <p class="mesaj-final ascuns" id="mesaj-final">Vă mulțumesc pentru tot ajutorul și pentru toate momentele frumoase de la clubul de robotică! Mă bucur mult că vă am alături și vă doresc o zi minunată!</p>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== Navigare între ecrane ===== */
+  var sections = document.querySelectorAll('.ecran');
+
+  function showScreen(id) {
+    for (var i = 0; i < sections.length; i++) {
+      sections[i].className = (sections[i].id === id) ? 'ecran activ' : 'ecran';
+    }
+    document.body.className = (id === 'ecran-joc') ? 'in-joc' : '';
+    window.scrollTo(0, 0);
+    if (id === 'ecran-joc') { prepareGame(); } else { stopGame(); }
+  }
+
+  /* ===== Fulgi de zăpadă (puțini, doar CSS) ===== */
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    var snowBox = document.getElementById('zapada');
+    for (var f = 0; f < 14; f++) {
+      var flake = document.createElement('span');
+      var size = 4 + Math.random() * 5;
+      flake.style.left = (Math.random() * 100) + '%';
+      flake.style.width = size + 'px';
+      flake.style.height = size + 'px';
+      flake.style.animationDuration = (9 + Math.random() * 8) + 's';
+      flake.style.animationDelay = (-Math.random() * 14) + 's';
+      snowBox.appendChild(flake);
+    }
+  }
+
+  /* ===== Joc: variabile ===== */
+  var GAME_SECONDS = 30;
+  var TWO_PI = 6.2832;
+  var canvas = document.getElementById('panza');
+  var ctx = canvas.getContext('2d');
+  var wrap = document.getElementById('panza-wrap');
+  var hudScore = document.getElementById('hud-scor');
+  var hudTime = document.getElementById('hud-timp');
+  var overlayStart = document.getElementById('ov-start');
+  var overlayEnd = document.getElementById('ov-final');
+  var finalScoreEl = document.getElementById('scor-final');
+
+  var W = 0, H = 0, scale = 1;
+  var robotSize = 40, robotHeight = 44, basketW = 76, basketH = 42;
+  var spriteRobot, spriteGold, spriteBasket;
+  var running = false, rafId = 0, lastTs = 0;
+  var score = 0, timeLeft = GAME_SECONDS, elapsed = 0, spawnTimer = 0, bounce = 0;
+  var shownScore = -1, shownTime = -1;
+  var basketX = 0, targetX = 0;
+  var keyLeft = false, keyRight = false, pointerActive = false;
+  var robots = [], effects = [];
+
+  /* ===== Joc: desenarea sprite-urilor (o singură dată) ===== */
+  function roundRect(g, x, y, w, h, r) {
+    g.beginPath();
+    g.moveTo(x + r, y);
+    g.arcTo(x + w, y, x + w, y + h, r);
+    g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r);
+    g.arcTo(x, y, x + w, y, r);
+    g.closePath();
+  }
+  function fillStroke(g) { g.fill(); g.stroke(); }
+  function dot(g, x, y, r) { g.beginPath(); g.arc(x, y, r, 0, TWO_PI); g.fill(); }
+  function makeSprite(w, h) {
+    var c = document.createElement('canvas');
+    c.width = Math.ceil(w * scale);
+    c.height = Math.ceil(h * scale);
+    return c;
+  }
+
+  function buildRobotSprite(gold) {
+    var c = makeSprite(robotSize, robotHeight);
+    var g = c.getContext('2d');
+    var k = robotSize * scale / 100;
+    var line = '#4a5d4f', body = gold ? '#e8b840' : '#9dbba0';
+    g.scale(k, k);
+    g.lineWidth = 2.5; g.lineJoin = 'round'; g.lineCap = 'round'; g.strokeStyle = line;
+    g.fillStyle = line;
+    roundRect(g, 36, 100, 10, 7, 3); g.fill();
+    roundRect(g, 54, 100, 10, 7, 3); g.fill();
+    g.fillStyle = body;
+    roundRect(g, 14, 82, 14, 9, 4); fillStroke(g);
+    roundRect(g, 72, 82, 14, 9, 4); fillStroke(g);
+    roundRect(g, 30, 76, 40, 26, 9); fillStroke(g);
+    g.fillStyle = '#f4b6bd'; dot(g, 50, 89, 5);
+    g.fillStyle = body;
+    roundRect(g, 22, 38, 56, 40, 12); fillStroke(g);
+    g.fillStyle = '#fffaf0';
+    roundRect(g, 29, 46, 42, 26, 8); g.fill();
+    g.fillStyle = line; dot(g, 41, 57, 4.5); dot(g, 59, 57, 4.5);
+    g.fillStyle = '#fff'; dot(g, 42.6, 55.4, 1.6); dot(g, 60.6, 55.4, 1.6);
+    g.lineWidth = 2;
+    g.beginPath(); g.moveTo(43, 63); g.quadraticCurveTo(50, 69, 57, 63); g.stroke();
+    g.fillStyle = 'rgba(240,150,165,0.8)'; dot(g, 35, 65, 3); dot(g, 65, 65, 3);
+    g.lineWidth = 2.5;
+    g.fillStyle = '#d9534f';
+    g.beginPath(); g.moveTo(27, 36); g.quadraticCurveTo(40, 6, 66, 12); g.quadraticCurveTo(62, 24, 73, 36);
+    g.closePath(); fillStroke(g);
+    g.fillStyle = '#fff';
+    roundRect(g, 24, 32, 52, 9, 4.5); fillStroke(g);
+    g.beginPath(); g.arc(66, 12, 6, 0, TWO_PI); fillStroke(g);
+    return c;
+  }
+
+  function buildBasketSprite() {
+    var c = makeSprite(basketW, basketH);
+    var g = c.getContext('2d');
+    var k = basketW * scale / 100;
+    g.scale(k, k);
+    g.lineJoin = 'round'; g.lineCap = 'round';
+    g.strokeStyle = '#7a5a35'; g.fillStyle = '#d2a265'; g.lineWidth = 2.5;
+    g.beginPath(); g.moveTo(6, 10); g.lineTo(94, 10); g.lineTo(84, 52); g.lineTo(16, 52); g.closePath(); fillStroke(g);
+    g.lineWidth = 1.5;
+    g.beginPath();
+    g.moveTo(9, 22); g.lineTo(91, 22);
+    g.moveTo(12, 34); g.lineTo(88, 34);
+    g.moveTo(14, 45); g.lineTo(86, 45);
+    g.stroke();
+    g.lineWidth = 2.5; g.fillStyle = '#e6c27a';
+    roundRect(g, 2, 4, 96, 10, 5); fillStroke(g);
+    g.fillStyle = '#d9534f'; g.lineWidth = 2;
+    g.beginPath(); g.arc(43, 9, 5, 0, TWO_PI); fillStroke(g);
+    g.beginPath(); g.arc(57, 9, 5, 0, TWO_PI); fillStroke(g);
+    g.beginPath(); g.arc(50, 9, 3.5, 0, TWO_PI); fillStroke(g);
+    return c;
+  }
+
+  /* ===== Joc: dimensionare adaptivă ===== */
+  function sizeCanvas() {
+    var zone = document.getElementById('joc-zona');
+    var landscape = window.innerWidth > window.innerHeight && window.innerHeight < 500;
+    var hudSpace = 38;
+    var availW = (zone.clientWidth || 300) - 6;
+    var availH = window.innerHeight - (landscape ? 70 : 150) - hudSpace;
+    var newW = Math.max(220, Math.min(availW, 640));
+    var newH = Math.max(170, Math.min(520, availH));
+    newH = Math.min(newH, newW * 1.5);
+    newW = Math.round(newW); newH = Math.round(newH);
+
+    var fx = W ? newW / W : 1, fy = H ? newH / H : 1, i;
+    for (i = 0; i < robots.length; i++) { robots[i].x *= fx; robots[i].y *= fy; }
+    for (i = 0; i < effects.length; i++) { effects[i].x *= fx; effects[i].y *= fy; }
+    basketX = basketX ? basketX * fx : newW / 2;
+    targetX = targetX ? targetX * fx : newW / 2;
+
+    W = newW; H = newH;
+    scale = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.width = Math.round(W * scale);
+    canvas.height = Math.round(H * scale);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    wrap.style.width = W + 'px';
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+
+    robotSize = Math.max(34, Math.min(56, Math.round(W * 0.11)));
+    robotHeight = Math.round(robotSize * 1.1);
+    basketW = Math.round(robotSize * 1.9);
+    basketH = Math.round(basketW * 0.55);
+    spriteRobot = buildRobotSprite(false);
+    spriteGold = buildRobotSprite(true);
+    spriteBasket = buildBasketSprite();
+    basketX = clampX(basketX); targetX = clampX(targetX);
+  }
+
+  function clampX(x) {
+    var m = basketW / 2;
+    return x < m ? m : (x > W - m ? W - m : x);
+  }
+
+  /* ===== Joc: afișaj scor / timp ===== */
+  function updateHud() {
+    var t = Math.max(0, Math.ceil(timeLeft));
+    if (score !== shownScore) { shownScore = score; hudScore.textContent = score; }
+    if (t !== shownTime) { shownTime = t; hudTime.textContent = t; }
+  }
+
+  /* ===== Joc: logica ===== */
+  function spawnRobot(progress) {
+    robots.push({
+      x: robotSize / 2 + Math.random() * (W - robotSize),
+      y: -robotHeight,
+      vy: H * (0.38 + Math.random() * 0.12) * (1 + 0.7 * progress),
+      gold: Math.random() < 0.15
+    });
+  }
+
+  function update(dt) {
+    var i, r, progress;
+    elapsed += dt;
+    timeLeft = GAME_SECONDS - elapsed;
+    if (timeLeft <= 0) { endGame(); return; }
+    progress = elapsed / GAME_SECONDS;
+
+    var speed = W * 1.1;
+    if (keyLeft) { targetX -= speed * dt; }
+    if (keyRight) { targetX += speed * dt; }
+    targetX = clampX(targetX);
+    basketX += (targetX - basketX) * Math.min(1, dt * 18);
+
+    spawnTimer -= dt;
+    if (spawnTimer <= 0) {
+      spawnRobot(progress);
+      spawnTimer = 0.95 - 0.45 * progress + Math.random() * 0.2;
+    }
+
+    var basketTop = H - basketH - 6;
+    for (i = robots.length - 1; i >= 0; i--) {
+      r = robots[i];
+      r.y += r.vy * dt;
+      var bottom = r.y + robotHeight;
+      if (bottom >= basketTop && bottom <= basketTop + basketH * 0.8 &&
+          Math.abs(r.x - basketX) < basketW * 0.5 + robotSize * 0.1) {
+        var pts = r.gold ? 30 : 10;
+        score += pts;
+        bounce = 0.18;
+        if (effects.length > 8) { effects.shift(); }
+        effects.push({ x: r.x, y: basketTop, age: 0, txt: '+' + pts, gold: r.gold });
+        robots.splice(i, 1);
+      } else if (r.y > H) {
+        robots.splice(i, 1);
+      }
+    }
+
+    for (i = effects.length - 1; i >= 0; i--) {
+      effects[i].age += dt;
+      if (effects[i].age > 0.7) { effects.splice(i, 1); }
+    }
+    if (bounce > 0) { bounce -= dt; }
+    updateHud();
+  }
+
+  function draw() {
+    var i, r, e, a;
+    ctx.clearRect(0, 0, W, H);
+    for (i = 0; i < robots.length; i++) {
+      r = robots[i];
+      ctx.drawImage(r.gold ? spriteGold : spriteRobot, r.x - robotSize / 2, r.y, robotSize, robotHeight);
+    }
+    var bh = basketH * (1 + (bounce > 0 ? 0.14 * Math.sin(bounce / 0.18 * Math.PI) : 0));
+    ctx.drawImage(spriteBasket, basketX - basketW / 2, H - 6 - bh, basketW, bh);
+
+    if (effects.length) {
+      ctx.font = 'bold ' + Math.round(robotSize * 0.5) + 'px Georgia, serif';
+      ctx.textAlign = 'center';
+      for (i = 0; i < effects.length; i++) {
+        e = effects[i];
+        a = 1 - e.age / 0.7;
+        ctx.globalAlpha = a;
+        ctx.strokeStyle = '#e6b94a'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(e.x, e.y + 6, 8 + e.age * 55, 0, TWO_PI); ctx.stroke();
+        ctx.fillStyle = e.gold ? '#b8860b' : '#b2495a';
+        ctx.fillText(e.txt, e.x, e.y - e.age * 60);
+      }
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function frame(ts) {
+    if (!running) { return; }
+    if (!lastTs) { lastTs = ts; }
+    var dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    if (dt > 0.05) { dt = 0.05; }
+    update(dt);
+    draw();
+    if (running) { rafId = requestAnimationFrame(frame); }
+  }
+
+  function stopGame() {
+    running = false;
+    if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+    keyLeft = false; keyRight = false; pointerActive = false;
+  }
+
+  function prepareGame() {
+    stopGame();
+    robots.length = 0; effects.length = 0;
+    sizeCanvas();
+    ctx.clearRect(0, 0, W, H);
+    overlayStart.className = 'overlay';
+    overlayEnd.className = 'overlay ascuns';
+    score = 0; timeLeft = GAME_SECONDS; shownScore = -1; shownTime = -1;
+    updateHud();
+  }
+
+  function startGame() {
+    if (running) { return; }
+    sizeCanvas();
+    score = 0; timeLeft = GAME_SECONDS; elapsed = 0; spawnTimer = 0.3; bounce = 0;
+    robots.length = 0; effects.length = 0;
+    basketX = W / 2; targetX = W / 2;
+    keyLeft = false; keyRight = false; pointerActive = false;
+    shownScore = -1; shownTime = -1;
+    overlayStart.className = 'overlay ascuns';
+    overlayEnd.className = 'overlay ascuns';
+    updateHud();
+    running = true; lastTs = 0;
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function endGame() {
+    stopGame();
+    timeLeft = 0;
+    updateHud();
+    finalScoreEl.textContent = score;
+    overlayEnd.className = 'overlay';
+  }
+
+  /* ===== Joc: controale (înregistrate o singură dată) ===== */
+  function pointerX(e) {
+    var rect = canvas.getBoundingClientRect();
+    var t = (e.touches && e.touches.length) ? e.touches[0] : e;
+    return (t.clientX - rect.left) * (W / (rect.width || W));
+  }
+  function onDown(e) {
+    if (!running) { return; }
+    pointerActive = true;
+    try { if (e.pointerId !== undefined && canvas.setPointerCapture) { canvas.setPointerCapture(e.pointerId); } } catch (err) {}
+    targetX = clampX(pointerX(e));
+    e.preventDefault();
+  }
+  function onMove(e) {
+    if (!running || !pointerActive) { return; }
+    targetX = clampX(pointerX(e));
+    e.preventDefault();
+  }
+  function onUp() { pointerActive = false; }
+
+  if (window.PointerEvent) {
+    canvas.addEventListener('pointerdown', onDown, false);
+    canvas.addEventListener('pointermove', onMove, false);
+    canvas.addEventListener('pointerup', onUp, false);
+    canvas.addEventListener('pointercancel', onUp, false);
+  } else {
+    canvas.addEventListener('touchstart', onDown, false);
+    canvas.addEventListener('touchmove', onMove, false);
+    canvas.addEventListener('touchend', onUp, false);
+    canvas.addEventListener('mousedown', onDown, false);
+    canvas.addEventListener('mousemove', onMove, false);
+    window.addEventListener('mouseup', onUp, false);
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (!running) { return; }
+    if (e.key === 'ArrowLeft' || e.keyCode === 37) { keyLeft = true; e.preventDefault(); }
+    else if (e.key === 'ArrowRight' || e.keyCode === 39) { keyRight = true; e.preventDefault(); }
+  }, false);
+  document.addEventListener('keyup', function (e) {
+    if (e.key === 'ArrowLeft' || e.keyCode === 37) { keyLeft = false; }
+    else if (e.key === 'ArrowRight' || e.keyCode === 39) { keyRight = false; }
+  }, false);
+
+  /* Redimensionare / schimbarea orientării */
+  var resizeTimer = 0;
+  function onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (document.getElementById('ecran-joc').className.indexOf('activ') !== -1) {
+        sizeCanvas();
+        if (!running) { ctx.clearRect(0, 0, W, H); }
+      }
+    }, 150);
+  }
+  window.addEventListener('resize', onResize, false);
+  window.addEventListener('orientationchange', onResize, false);
+
+  /* ===== Butoane ===== */
+  document.getElementById('btn-aventura').addEventListener('click', function () { showScreen('ecran-mesaj'); }, false);
+  document.getElementById('btn-spre-joc').addEventListener('click', function () { showScreen('ecran-joc'); }, false);
+  document.getElementById('btn-start-joc').addEventListener('click', startGame, false);
+  document.getElementById('btn-din-nou').addEventListener('click', startGame, false);
+  document.getElementById('btn-spre-final').addEventListener('click', function () { showScreen('ecran-final'); }, false);
+
+  var btnSurpriza = document.getElementById('btn-surpriza');
+  btnSurpriza.addEventListener('click', function () {
+    document.getElementById('mesaj-final').className = 'mesaj-final';
+    btnSurpriza.className = 'btn ascuns';
+  }, false);
+})();
+</script>
+</body>
+</html>
